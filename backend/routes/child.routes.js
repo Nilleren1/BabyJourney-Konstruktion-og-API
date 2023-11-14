@@ -2,17 +2,18 @@ module.exports = (app) => {
   const child = require("../controllers/child.controller.js");
   var router = require("express").Router();
 
-  // Create a new Tutorial
+  // Create a new child
   router.post("/", child.create);
 
-  // Retrieve a single Tutorial with id
+  // Retrieve a single child with id
   router.get("/:id", child.findOne);
 
-  // Update a Tutorial with id
+  // Update a child with id
   router.put("/:id", child.update);
 
-  // Delete a Tutorial with id
+  // Delete a child with id
   router.delete("/:id", child.delete);
 
   app.use("/api/child", router);
+  
 };
