@@ -1,3 +1,4 @@
+const { error } = require("console");
 const db = require("../models");
 const Child = db.child;
 const Op = db.Sequelize.Op;
@@ -5,12 +6,11 @@ const Op = db.Sequelize.Op;
 // Create and save new tutorial
 exports.create = (req, res) => {
   if (!req.body.name) {
-    res.status(404).send({ message: "child not found" });
+    res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
 
   const child = {
-    // child_id: req.body.id,
     name: req.body.name,
   };
 
@@ -20,14 +20,25 @@ exports.create = (req, res) => {
 };
 
 // Find a single Tutorial with an id
-exports.findOne = (req, res) => {};
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+  Child.findByPk(id)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err + "Error couldn't retrieve child with id=" + id,
+      });
+    });
+};
 
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
   Child.update(req.body, {
-    where: { id: id },
+    where: { child_id: id },
   })
     .then((num) => {
       if (num == 1) {
@@ -51,22 +62,22 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Child.destroy({
-    where: { id: id }
+    where: { child_id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Child was deleted successfully!"
+          message: "Child was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete child with id=${id}. Maybe child was not found!`
+          message: `Cannot delete child with id=${id}. Maybe child was not found!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Could not delete child with id=" + id
+        message: "Could not delete child with id=" + id,
       });
     });
 };
