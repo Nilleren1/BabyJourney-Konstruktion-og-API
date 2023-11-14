@@ -1,11 +1,11 @@
 module.exports = (sequelize, DATATYPE) => {
   const Milestone = sequelize.define("milestones", {
-    // milestone_id: {
-    //   type: DATATYPE.INTEGER,
-    //   primaryKey: true,
-    //   autoIncrement: true,
-    //   allowNull: false,
-    // },
+    milestone_id: {
+      type: DATATYPE.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     title: {
       type: DATATYPE.STRING,
       allowNull: false,
@@ -19,9 +19,9 @@ module.exports = (sequelize, DATATYPE) => {
       allowNull: true,
     },
     image: {
-      type: DATATYPE.BLOB('long'),
+      type: DATATYPE.BLOB("long"),
       allowNull: true,
-    }
+    },
   });
 
   return Milestone;
