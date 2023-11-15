@@ -8,13 +8,13 @@ exports.create = (req, res) => {
     //Validering
     if (!req.body.title) {
         res.status(400).send({
-            message: "Du skal navngive din milestone!"
+            message: "Du skal navngive din milestone!",
         });
         return;
     }
     if (!req.body.date) {
         res.status(400).send({
-            message: "Du skal vælge dato!"
+            message: "Du skal vælge dato!",
         });
     }
 
@@ -24,18 +24,17 @@ exports.create = (req, res) => {
         title: req.body.title,
         date: req.body.date,
         description: req.body.description,
-        child_id: req.body.child_id
+        child_id: req.body.child_id,
     };
 
     //Save Milestone in db
     Milestone.create(milestone)
-        .then(data => {
+        .then((data) => {
             res.send(data);
         })
-        .catch(err => {
+        .catch((err) => {
             res.status(500).send({
-                message:
-                    err.message || "Desværre, du kunne ikke oprette milestone..."
+                message: err.message || "Desværre, du kunne ikke oprette milestone...",
             });
         });
 };
@@ -45,13 +44,13 @@ exports.findAll = (req, res) => {
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
     Milestone.findAll({ where: condition })
-        .then(data => {
+        .then((data) => {
             res.send(data);
         })
-        .catch(err => {
+        .catch((err) => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving tutorials."
+                    err.message || "Some error occurred while retrieving tutorials.",
             });
         });
 };
@@ -60,37 +59,41 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
 
     Milestone.findByPk(id)
-        .then(data => {
+        .then((data) => {
             res.send(data);
         })
-        .catch(err => {
+        .catch((err) => {
             res.status(500).send({
-                message: "Error retrieving Tutorial with id=" + id
+                message: "Error retrieving Tutorial with id=" + id,
             });
         });
-
 };
 // Update a Milestone by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
     Milestone.update(req.body, {
-        where: { id: id }
+        where: { milestone_id: id },
     })
-        .then(num => {
+        .then((num) => {
             if (num == 1) {
                 res.status(200).send({
-                    message: "Milestone was updated", id: id, payload: req.body
+                    message: "Milestone was updated",
+                    id: id,
+                    payload: req.body,
                 });
             } else {
                 res.send({
-                    message: 'Could not update the milestone with the id= ' + id + " Might not have been found"
+                    message:
+                        "Could not update the milestone with the id= " +
+                        id +
+                        " Might not have been found",
                 });
             }
         })
-        .catch(err => {
+        .catch((err) => {
             res.status(500).send({
-                message: err + "Error updating Milestone with id=" + id
+                message: err + "Error updating Milestone with id=" + id,
             });
         });
 };
@@ -99,22 +102,22 @@ exports.delete = (req, res) => {
     const id = req.params.id;
 
     Milestone.destroy({
-        where: { id: id }
+        where: { milestone_id: id },
     })
-        .then(num => {
+        .then((num) => {
             if (num == 1) {
                 res.send({
-                    message: "Milestone was deleted successfully!"
+                    message: "Milestone was deleted successfully!",
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Milestone with id=${id}. Maybe the milestone was not found!`
+                    message: `Cannot delete Milestone with id=${id}. Maybe the milestone was not found!`,
                 });
             }
         })
-        .catch(err => {
+        .catch((err) => {
             res.status(500).send({
-                message: "Could not delete Milestone with id=" + id
+                message: "Could not delete Milestone with id=" + id,
             });
         });
 };

@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize("babyJourneyDB", "root", "", {
   host: "localhost",
   dialect: "mysql",
-  port: 3305,
+  port: 3306,
   password: process.env.SECRET,
 });
 
