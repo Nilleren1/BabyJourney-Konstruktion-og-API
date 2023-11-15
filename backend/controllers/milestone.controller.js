@@ -20,6 +20,7 @@ exports.create = (req, res) => {
 
     //Create a Milestone
     const milestone = {
+        id: req.body.id,
         title: req.body.title,
         date: req.body.date,
         description: req.body.description,
