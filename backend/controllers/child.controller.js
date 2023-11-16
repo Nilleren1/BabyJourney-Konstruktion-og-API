@@ -21,9 +21,6 @@ exports.create = (req, res) => {
 
 // Find all milestone belonging to the Child profile
 exports.findAll = (req, res) => {
-  //const id = req.query.child_id;
-  // const condition = id ? { child_id: { [Op.like]: { child_id } } } : null;
-
   Child.findAll({
     include: [
       {
