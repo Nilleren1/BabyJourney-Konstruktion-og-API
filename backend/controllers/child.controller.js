@@ -3,7 +3,7 @@ const Child = db.child;
 const Milestone = db.milestone;
 const Op = db.Sequelize.Op;
 
-// Create and save new Child profile
+// Create and save a new Child profile
 exports.create = (req, res) => {
   if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
@@ -19,7 +19,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Find all milestone belonging to the Child profile
+// Find all Milestone belonging to the Child profile
 exports.findAll = (req, res) => {
   Child.findAll({
     include: [
@@ -33,7 +33,7 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Find a single Child profile with an id
+// Find a single Child profile with an id and all the Milestone belonging to it
 exports.findOne = (req, res) => {
   const id = req.params.id;
   Child.findByPk(id, {
