@@ -1,9 +1,9 @@
-const { error } = require("console");
 const db = require("../models");
 const Child = db.child;
+const Milestone = db.milestone;
 const Op = db.Sequelize.Op;
 
-// Create and save new tutorial
+// Create and save new Child profile
 exports.create = (req, res) => {
   if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
@@ -19,21 +19,46 @@ exports.create = (req, res) => {
   });
 };
 
-// Find a single Tutorial with an id
+// Find all milestone belonging to the Child profile
+exports.findAll = (req, res) => {
+  //const id = req.query.child_id;
+  // const condition = id ? { child_id: { [Op.like]: { child_id } } } : null;
+
+  Child.findAll({
+    include: [
+      {
+        model: Milestone,
+        as: "milestone",
+      },
+    ],
+  }).then((data) => {
+    res.send(data);
+  });
+};
+
+// Find a single Child profile with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Child.findByPk(id)
+  Child.findByPk(id, {
+    include: [
+      {
+        model: Milestone,
+        as: "milestone",
+      },
+    ],
+  })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err + "Error couldn't retrieve child with id=" + id,
+        message:
+          err + "Error couldn't retrieve the Child profile with id=" + id,
       });
     });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Child profile by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -43,21 +68,21 @@ exports.update = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Child was updated successfully.",
+          message: "Child profile was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update child with id=${id}. Maybe child was not found or req.body is empty!`,
+          message: `Cannot update the Child profile with id=${id}. Maybe the child profile was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating child with id=" + id,
+        message: "Error updating the child profile with id=" + id,
       });
     });
 };
-// Delete a Tutorial with the specified id in the request
+// Delete a Child profile with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -67,17 +92,17 @@ exports.delete = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Child was deleted successfully!",
+          message: "Child profile was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete child with id=${id}. Maybe child was not found!`,
+          message: `Cannot delete the Child profile with id=${id}. Maybe the Child profile was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete child with id=" + id,
+        message: "Could not delete the Child profile with id=" + id,
       });
     });
 };

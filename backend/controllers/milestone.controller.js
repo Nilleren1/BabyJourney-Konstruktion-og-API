@@ -1,9 +1,8 @@
 const db = require("../models");
 const Milestone = db.milestone;
-const Child = db.child;
 const Op = db.Sequelize.Op;
 
-// Create and save new tutorial
+// Create and save new Milestone
 exports.create = (req, res) => {
   //Validering
   if (!req.body.title) {
@@ -120,7 +119,3 @@ exports.delete = (req, res) => {
       });
     });
 };
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {};
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {};
