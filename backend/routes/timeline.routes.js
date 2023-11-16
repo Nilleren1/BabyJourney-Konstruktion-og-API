@@ -3,18 +3,21 @@ module.exports = (app) => {
   const milestone = require("../controllers/milestone.controller.js");
   var router = require("express").Router();
 
-  // Child URI
+  // Child profile URI
 
-  // Create a new child
+  // Create a new Child profile
   router.post("/child", child.create);
 
-  // Retrieve a single child with id
+  // Retrieve all Child profile
+  router.get("/child", child.findAll);
+
+  // Retrieve a single Child profile with id
   router.get("/child/:id", child.findOne);
 
-  // Update a child with id
+  // Update a Child profile with id
   router.put("/child/:id", child.update);
 
-  // Delete a child with id
+  // Delete a Child profile with id
   router.delete("/child/:id", child.delete);
 
   // Milestone URI
