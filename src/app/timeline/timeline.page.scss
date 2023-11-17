@@ -6,7 +6,7 @@
     position: relative;
 
     ion-img {
-      margin-top: 2rem;
+      margin-top: 0.5rem;
       display: block;
       border-radius: 10px !important;
       overflow: hidden;
@@ -152,6 +152,9 @@
   .scroll-container {
     max-height: 500px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
 
     .timeline-item {
       margin-bottom: 50px;
@@ -256,4 +259,15 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4);
 }
 
+}
+
+.child-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-inline: 2rem;
+  margin-top: 2rem;
+}
+
+.child-buttons ion-button {
+  width: 25vw;
 }
