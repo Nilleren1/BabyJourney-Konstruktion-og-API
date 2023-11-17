@@ -1,11 +1,10 @@
 <ion-content [fullscreen]="true">
-
   <div class="page-container">
-    <div class="header">
-      <div *ngIf="imageUrl && imageUrl.length > 0">
-        <ion-img [src]="imageUrl[0]" alt="Billede"></ion-img>
+    <div class="header" *ngFor="let p of profiles">
+      <div *ngIf="p.image && p.image.length > 0">
+        <img [src]="p.image " alt="Billede" />
       </div>
-      <ion-label>Konrad</ion-label>
+      <ion-label>{{p.name}}</ion-label>
     </div>
 
     <div class="timeline">
@@ -18,7 +17,7 @@
         >
           <div class="scrolling-content">
             <div (click)="openOverview(item)">
-              <div class="date-box">{{item.Date}} </div>
+              <div class="date-box">{{item.Date}}</div>
               <div class="item-content">
                 <div class="description-card">
                   <div class="description-text">{{item.Description}}</div>

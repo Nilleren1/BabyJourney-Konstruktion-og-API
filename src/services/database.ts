@@ -15,16 +15,27 @@ import {
 } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const app = initializeApp(environment.firebase);
-
+const baseUrl = 'http://localhost:8080/api';
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
   db = getFirestore(app);
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
+
+  // Create Child profile
+  create(data: any): Observable<any> {
+    return this.http.post<{ message: string }>(baseUrl + '/child', data);
+  }
+
+  getAll(): Observable<any[]> {
+    return this.http.get<any[]>(baseUrl + '/child');
+  }
 
   fetchData() {
     const q = query(collection(this.db, 'Konrad'), orderBy('Date', 'desc'));
@@ -112,4 +123,10 @@ export class FirestoreService {
       console.error('Error updating document: ', e);
     }
   }
+}
+
+export interface ChildProfile {
+  Child_id: any;
+  name: string;
+  image: File;
 }
