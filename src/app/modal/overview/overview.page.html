@@ -7,14 +7,13 @@
       (click)="closeModal()"
     ></ion-icon>
     <div class="photo-card">
-      <img class="photo" [src]="item.PhotoURL" alt="photo" class="photo-card" />
+      <img [src]="item.image" *ngIf="item.image" class="photo-card" />
     </div>
-
     <div class="label-margin">
       <ion-label> Date </ion-label>
     </div>
     <div class="date-card">
-      <div class="date">{{item.Date}}</div>
+      <div class="date">{{item.date | date:'dd.MM.yyyy'}}</div>
       <ion-icon name="calendar-number" class="calendar-icon"></ion-icon>
     </div>
 
@@ -22,12 +21,11 @@
       <ion-label> Description </ion-label>
     </div>
     <div class="description-card">
-      <ion-textarea rows="6" maxlength="250" class="description-text"
-        >{{item.Description}}</ion-textarea
-      >
+      <ion-textarea rows="6" maxlength="250" class="description-text">
+        {{item.description}}</ion-textarea>
     </div>
 
-    <ion-icon name="trash" class="trash-icon" (click)="confirmDelete()"></ion-icon>
+    <ion-icon name="trash" class="trash-icon" (click)="confirmDelete(item.milestone_id)"></ion-icon>
     <ion-icon name="create" class="edit-icon" (click)="edit()"></ion-icon>
   </div>
 </ion-content>

@@ -7,7 +7,7 @@
       (click)="closeModal()"
     ></ion-icon>
     <div class="photo-card">
-      <div class="photo-card" *ngIf="!imageUrl">
+      <div class="photo-card" *ngIf="!milestone.image">
         <ion-icon
           name="camera"
           class="icon top"
@@ -20,8 +20,20 @@
           (click)="openGallery()"
         ></ion-icon>
       </div>
-      
-      <img [src]="imageUrl" *ngIf="imageUrl" class="photo-card"/>
+
+      <img [src]="milestone.image" *ngIf="milestone.image" class="photo-card" />
+    </div>
+
+    <div class="label-margin">
+      <ion-label> Titel: </ion-label>
+    </div>
+    <div class="date-card" color="black">
+      <ion-input
+        [(ngModel)]="milestone.title"
+        class="ion-text-black"
+        type="text"
+        placeholder="skriv din titel her"
+      ></ion-input>
     </div>
 
     <div class="label-margin">
@@ -45,7 +57,7 @@
     </div>
     <div class="description-card">
       <ion-textarea
-        [(ngModel)]="description"
+        [(ngModel)]="milestone.description"
         placeholder="Write your description here..."
         rows="6"
         maxlength="250"

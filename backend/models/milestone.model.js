@@ -19,7 +19,7 @@ module.exports = (sequelize, DATATYPE) => {
       allowNull: true,
     },
     image: {
-      type: DATATYPE.BLOB("long"),
+      type: DATATYPE.TEXT("long"),
       allowNull: true,
     },
   });
