@@ -6,7 +6,7 @@
     position: relative;
 
     ion-img {
-      margin-top: 2rem;
+      margin-top: 0.5rem;
       display: block;
       border-radius: 10px !important;
       overflow: hidden;
@@ -45,6 +45,23 @@
       margin-bottom: 50px;
       z-index: 2;
 
+      .title-box {
+        left: calc(50% - (104px / 2));
+        text-align: center;
+        align-items: center;
+        height: 30px;
+        flex-shrink: 0;
+        background-color: white;
+        color: black;
+        font-weight: 700;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        z-index: 3;
+      }
+
       .date-box {
         left: calc(50% - (104px / 2));
         position: absolute;
@@ -52,7 +69,7 @@
         height: 30px;
         flex-shrink: 0;
         background-color: #87ceeb;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px -4px -4px rgba(0, 0, 0, 0.25);
         color: white;
         font-weight: 400;
         font-size: 12px;
@@ -150,8 +167,11 @@
   }
 
   .scroll-container {
-    max-height: 500px;
+    max-height: 450px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
 
     .timeline-item {
       margin-bottom: 50px;
@@ -256,4 +276,15 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4);
 }
 
+}
+
+.child-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-inline: 2rem;
+  margin-top: 2rem;
+}
+
+.child-buttons ion-button {
+  width: 25vw;
 }
