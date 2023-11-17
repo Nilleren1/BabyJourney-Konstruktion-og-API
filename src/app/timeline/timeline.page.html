@@ -1,5 +1,16 @@
 <ion-content [fullscreen]="true">
 
+  <div class="child-buttons">
+    <ion-button>
+      <ion-icon slot="icon-only" name="skull"></ion-icon>
+    </ion-button>
+    <ion-button>
+      <ion-icon slot="icon-only" name="brush"></ion-icon>
+    </ion-button>
+    <ion-button>
+      <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+    </ion-button>
+  </div>
   <div class="page-container">
     <div class="header">
       <div *ngIf="imageUrl && imageUrl.length > 0">
@@ -18,6 +29,7 @@
         >
           <div class="scrolling-content">
             <div (click)="openOverview(item)">
+              <div class="title-box">{{item.title}} </div>
               <div class="date-box">{{item.date | date:'dd-MM-yyyy'}} </div>
               <div class="item-content">
                 <div class="description-card">
