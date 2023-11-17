@@ -15,6 +15,10 @@ import {
 } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+const baseUrl = 'http://localhost:8080/api';
 
 const app = initializeApp(environment.firebase);
 
@@ -24,8 +28,36 @@ const app = initializeApp(environment.firebase);
 export class FirestoreService {
   db = getFirestore(app);
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
+  //MySQL db________________________________________________________________
+
+  //Create milestone
+  createMilestone(data: any): Observable<any> {
+    return this.http.post<{ message: string }>(baseUrl + '/milestone', data);
+  }
+
+  //GetAll milestones
+  getAllMilestones(): Observable<any[]> {
+    return this.http.get<any[]>(baseUrl + '/milestone');
+  }
+
+  //Get a single milestone
+  getMilestone(id: any): Observable<any> {
+    return this.http.get(`${baseUrl}/milestone/${id}`);
+  }
+
+  //Delete a milestone
+  deleteMilestone(id: any): Observable<any> {
+    return this.http.delete(`${baseUrl}/milestone/${id}`);
+  }
+
+  //Update milestone
+  updateMilestone(id: any, data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/milestone/${id}`, data);
+  }
+
+  //Firestore_________________________________________________________________
   fetchData() {
     const q = query(collection(this.db, 'Konrad'), orderBy('Date', 'desc'));
 

@@ -12,6 +12,14 @@ import { ModalEditPage } from '../modal-edit/modal-edit.page';
 export class OverviewPage implements OnInit {
   item: any;
   docId: string = '';
+  milestone: any = {
+    milestone_id: null,
+    title: '',
+    date: '',
+    description: '',
+    image: '',
+    child_id: null,
+  };
 
   constructor(
     private modalController: ModalController,

@@ -13,7 +13,7 @@ export class TimelinePage implements OnInit {
   data: any;
   imageUrl: string[] = [];
   lastDoc: any;
-  displayData: any;
+  milestones: any[] = [];
   constructor(
     private firestoreService: FirestoreService,
     private cdRef: ChangeDetectorRef,
@@ -22,26 +22,30 @@ export class TimelinePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.firestoreService.fetchData().then((data) => {
-      if (data) {
-        this.data = data;
-        this.displayData = [...this.data].reverse();
-        this.data.forEach((item: any) => {
-          this.imageUrl.push(item['PhotoURL']);
-        });
-      }
-      if (this.data.length < 4) {
-        this.loadMoreItems();
-      }
-      this.cdRef.detectChanges();
-      this.scrollToBottom();
-    });
+    this.firestoreService.getAllMilestones().subscribe((res) => {
+      this.milestones.push(...res)
+      console.log(this.milestones)
+    })
+    // this.firestoreService.fetchData().then((data) => {
+    //   if (data) {
+    //     this.data = data;
+    //     this.displayData = [...this.data].reverse();
+    //     this.data.forEach((item: any) => {
+    //       this.imageUrl.push(item['PhotoURL']);
+    //     });
+    //   }
+    //   if (this.data.length < 4) {
+    //     this.loadMoreItems();
+    //   }
+    //   this.cdRef.detectChanges();
+    //   this.scrollToBottom();
+    // });
 
-    this.firestoreService.fetchDataRealtime((data) => {
-      this.data = data;
-      this.displayData = [...this.data].reverse();
-      this.cdRef.detectChanges();
-    });
+    // this.firestoreService.fetchDataRealtime((data) => {
+    //   this.data = data;
+    //   this.displayData = [...this.data].reverse();
+    //   this.cdRef.detectChanges();
+    // });
   }
 
   scrollToBottom() {
@@ -100,7 +104,7 @@ export class TimelinePage implements OnInit {
       component: OverviewPage,
       cssClass : 'my-modal',  componentProps: { 
         item: item,
-        docId: item.id 
+        milestone_id: item.milestone_id 
       }
     });
 

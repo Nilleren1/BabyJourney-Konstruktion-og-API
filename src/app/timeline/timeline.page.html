@@ -12,18 +12,18 @@
       <div class="scroll-container" (scroll)="onScroll($event)">
         <div
           class="timeline-item"
-          *ngFor="let item of displayData; let i = index"
+          *ngFor="let item of milestones; let i = index"
           [style.bottom.px]="i * -120"
           [ngClass]="{'reverse-layout': i % 2 === 1}"
         >
           <div class="scrolling-content">
             <div (click)="openOverview(item)">
-              <div class="date-box">{{item.Date}} </div>
+              <div class="date-box">{{item.date | date:'dd-MM-yyyy'}} </div>
               <div class="item-content">
                 <div class="description-card">
-                  <div class="description-text">{{item.Description}}</div>
+                  <div class="description-text">{{item.description}}</div>
                 </div>
-                <img class="photo" [src]="item.PhotoURL" alt="photo" />
+                <img class="photo" [src]="item.image" alt="photo" />
               </div>
             </div>
           </div>
