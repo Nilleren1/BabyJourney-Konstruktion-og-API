@@ -12,6 +12,7 @@ exports.create = (req, res) => {
 
   const child = {
     name: req.body.name,
+    image: req.body.image,
   };
 
   Child.create(child).then((data) => {

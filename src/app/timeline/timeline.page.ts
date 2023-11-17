@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FirestoreService } from '../../services/database';
+import { ChildProfile, FirestoreService } from '../../services/database';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { ModalController, NavController } from '@ionic/angular';
 import { OverviewPage } from '../modal/overview/overview.page';
@@ -14,6 +14,7 @@ export class TimelinePage implements OnInit {
   imageUrl: string[] = [];
   lastDoc: any;
   displayData: any;
+  profiles: any[] = [];
   constructor(
     private firestoreService: FirestoreService,
     private cdRef: ChangeDetectorRef,
@@ -21,7 +22,16 @@ export class TimelinePage implements OnInit {
     private navCtrl: NavController
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.firestoreService.getAll().subscribe(
+      (data: any[]) => {
+        this.profiles.push(...data);
+        console.log(this.profiles);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     this.firestoreService.fetchData().then((data) => {
       if (data) {
         this.data = data;
@@ -89,19 +99,20 @@ export class TimelinePage implements OnInit {
   async addNewEvent() {
     const modal = await this.modalController.create({
       component: ModalAddPage,
-      cssClass : 'my-modal',
+      cssClass: 'my-modal',
     });
 
     await modal.present();
   }
 
-  async openOverview(item: any){
+  async openOverview(item: any) {
     const modal = await this.modalController.create({
       component: OverviewPage,
-      cssClass : 'my-modal',  componentProps: { 
+      cssClass: 'my-modal',
+      componentProps: {
         item: item,
-        docId: item.id 
-      }
+        docId: item.id,
+      },
     });
 
     await modal.present();
