@@ -109,5 +109,6 @@ export class TimelinePage implements OnInit {
     });
 
     await modal.present();
+
   }
 }

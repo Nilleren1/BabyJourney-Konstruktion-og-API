@@ -8,6 +8,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { DatetimePopoverComponent } from 'src/app/datetime-popover/datetime-popover.component';
 import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import { FirestoreService } from 'src/services/database';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-modal-add',
@@ -33,7 +34,8 @@ export class ModalAddPage implements OnInit {
     public popoverController: PopoverController,
     private firestoreService: FirestoreService,
     private apiService: FirestoreService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router
   ) {}
 
   closeModal() {
@@ -92,9 +94,10 @@ export class ModalAddPage implements OnInit {
       image: this.milestone.image,
     };
     try {
-      this.apiService.createMilestone(data).subscribe(
+      await this.apiService.createMilestone(data).subscribe(
         (milestones) => {
           console.log('Milestone posted succesfully:', milestones);
+         location.reload();
         },
         (error) => {
           console.error('Failed to create a new milestone: ', error);

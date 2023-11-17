@@ -3,7 +3,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { FirestoreService } from 'src/services/database';
 import { AlertController } from '@ionic/angular';
 import { ModalEditPage } from '../modal-edit/modal-edit.page';
-
+import {Router } from '@angular/router'
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.page.html',
@@ -25,14 +25,16 @@ export class OverviewPage implements OnInit {
     private modalController: ModalController,
     private firestoreService: FirestoreService,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private apiService: FirestoreService,
+    private router: Router
   ) {}
 
   async ngOnInit() {
     const modal = await this.modalController.getTop();
     if (modal && modal.componentProps) {
       this.item = modal.componentProps['item'];
-      this.docId = modal.componentProps['docId'];
+      this.milestone.milestone_id = modal.componentProps['milestone_id'];
     }
   }
 
@@ -40,7 +42,7 @@ export class OverviewPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  async confirmDelete() {
+  async confirmDelete(id: any) {
     const alert = await this.alertController.create({
       header: 'Confirm deletion',
       message: 'Are you sure you want to delete?',
@@ -56,7 +58,7 @@ export class OverviewPage implements OnInit {
         {
           text: 'Yes',
           handler: () => {
-            this.delete();
+            this.delete(id);
           },
         },
       ],
@@ -65,29 +67,55 @@ export class OverviewPage implements OnInit {
     await alert.present();
   }
 
-  async delete() {
-    console.log(this.docId);
+  async delete(id: any){
     try {
-      await this.firestoreService.deleteData(this.docId);
-      const toast = await this.toastController.create({
-        message: 'Memory deleted successfully',
-        duration: 2000,
-        color: 'success',
-        cssClass: 'toast-success'
-      });
-      toast.present();
+      await this.apiService.deleteMilestone(id).subscribe(
+        (milestones) => {
+          console.log('Milestone deleted succesfully:', milestones);
+          this.router.navigate(['/timeline'])
+        },
+        (error) => {
+          console.error('Failed to delete a new milestone: ', error);
+        }
+      )
     } catch (e) {
-      console.error('Error deleting document: ', e);
+      console.error('Error deleting milestone: ', e);
+      // Tilføj din toaster her for fejl
       const toast = await this.toastController.create({
-        message: 'Something went wrong',
+        message: 'Something went wrong!',
         duration: 2000,
         color: 'danger',
-        cssClass: 'toast-error'
       });
       toast.present();
     }
-    this.modalController.dismiss({ delete: true });
+
+    this.modalController.dismiss();
   }
+  
+
+  // async delete() {
+  //   console.log(this.docId);
+  //   try {
+  //     await this.firestoreService.deleteData(this.docId);
+  //     const toast = await this.toastController.create({
+  //       message: 'Memory deleted successfully',
+  //       duration: 2000,
+  //       color: 'success',
+  //       cssClass: 'toast-success'
+  //     });
+  //     toast.present();
+  //   } catch (e) {
+  //     console.error('Error deleting document: ', e);
+  //     const toast = await this.toastController.create({
+  //       message: 'Something went wrong',
+  //       duration: 2000,
+  //       color: 'danger',
+  //       cssClass: 'toast-error'
+  //     });
+  //     toast.present();
+  //   }
+  //   this.modalController.dismiss({ delete: true });
+  // }
 
   async edit() {
     this.modalController.dismiss();
@@ -97,7 +125,7 @@ export class OverviewPage implements OnInit {
         cssClass : 'my-modal',
         componentProps: { 
           item: this.item,
-          docId: this.docId
+          milestone_id: this.milestone.milestone_id,
         }
       });
   

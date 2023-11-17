@@ -2,19 +2,20 @@
 
   <div class="child-buttons">
     <ion-button>
-      <ion-icon slot="icon-only" name="skull"></ion-icon>
+      <ion-icon slot="icon-only" name="add-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="brush"></ion-icon>
     </ion-button>
     <ion-button>
-      <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      <ion-icon slot="icon-only" name="skull"></ion-icon>
     </ion-button>
   </div>
   <div class="page-container">
     <div class="header">
-      <div *ngIf="imageUrl && imageUrl.length > 0">
-        <ion-img [src]="imageUrl[0]" alt="Billede"></ion-img>
+      <!-- *ngIf="imageUrl && imageUrl.length > 0" -->
+      <div>
+        <ion-img src="../../assets/timeline/Konrad.jpg" alt="Billede"></ion-img>
       </div>
       <ion-label>Konrad</ion-label>
     </div>
